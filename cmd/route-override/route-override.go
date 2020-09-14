@@ -281,10 +281,14 @@ func processRoutes(netnsname string, conf *RouteOverrideConfig) (*current.Result
 				break
 			}
 		}
+
+		log.Printf("containerIFName: %s\n", containerIFName)
+
 		// Add route
 		dev, _ := netlink.LinkByName(containerIFName)
 		for _, route := range conf.AddRoutes {
 			newRoutes = append(newRoutes, route)
+			log.Printf("adding route: %v\n", route)
 			if err := addRoute(dev, route); err != nil {
 				fmt.Fprintf(os.Stderr, "failed to add route: %v: %v", route, err)
 			}
@@ -293,6 +297,7 @@ func processRoutes(netnsname string, conf *RouteOverrideConfig) (*current.Result
 		return nil
 	})
 	res.Routes = newRoutes
+	log.Printf("new routes: %v\n", newRoutes)
 
 	return res, nil
 }
