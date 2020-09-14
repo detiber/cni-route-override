@@ -22,6 +22,7 @@ import (
 	"bytes"
 	"encoding/json"
 	"fmt"
+	"log"
 	"net"
 	"os"
 
@@ -296,6 +297,7 @@ func processRoutes(netnsname string, conf *RouteOverrideConfig) (*current.Result
 }
 
 func cmdAdd(args *skel.CmdArgs) error {
+	log.Println("calling check command")
 	overrideConf, err := parseConf(args.StdinData, args.Args)
 	if err != nil {
 		return err
@@ -310,6 +312,7 @@ func cmdAdd(args *skel.CmdArgs) error {
 }
 
 func cmdDel(args *skel.CmdArgs) error {
+	log.Println("calling check command")
 	// TODO: the settings are not reverted to the previous values. Reverting the
 	// settings is not useful when the whole container goes away but it could be
 	// useful in scenarios where plugins are added and removed at runtime.
@@ -317,6 +320,7 @@ func cmdDel(args *skel.CmdArgs) error {
 }
 
 func cmdCheck(args *skel.CmdArgs) error {
+	log.Println("calling check command")
 	// Parse previous result
 	overrideConf, err := parseConf(args.StdinData, args.Args)
 
